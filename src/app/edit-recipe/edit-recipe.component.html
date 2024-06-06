@@ -1,0 +1,155 @@
+<h1>עריכת מתכון</h1>
+<form (ngSubmit)="saveChanges()" #myForm="ngForm">
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label for="name">שם מתכון: </mat-label>
+            <input matInput name="name" id="name" type="text" placeholder="שנה שם" [(ngModel)]="emptyRecipe.Name"
+                (click)="emptyRecipe.Name=null" />
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label for="category">קטגוריה:</mat-label>
+            <mat-select name="category" id="category" disableRipple [(ngModel)]="emptyRecipe.CategoryId">
+                <mat-option *ngFor="let category of categories" value={{category.Id}}>{{category.Name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div id="recipeImage">
+        <mat-form-field appearance="fill">
+            <mat-label for="image">תמונה:</mat-label>
+            <input matInput name="image" id="image" type="text" placeholder="שנה שם" [(ngModel)]="emptyRecipe.Image"
+                (click)="emptyRecipe.Image=null" />
+        </mat-form-field>
+        <!-- <img src="../../assets/images/{{emptyRecipe.Image}}" id="image" /> -->
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label for="preperationTime">זמן הכנה </mat-label>
+            <input matInput name="preperationTime" id="preperationTime" type="text"
+                [(ngModel)]="emptyRecipe.PreparationTimeInMinute" (click)="emptyRecipe.PreparationTimeInMinute=null">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label for="level">דרגת קושי</mat-label>
+            <input matInput name="level" id="level" type="text" [(ngModel)]="emptyRecipe.Level"
+                (click)="emptyRecipe.Level=null">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <h1>רכיבים:</h1>
+        <ul>
+            <li *ngFor="let layer of emptyRecipe.Layers; let i = index">
+                <ul>
+                    <h3>{{layer.Description}}</h3>
+                    <div>
+                        <mat-form-field appearance="fill">
+                            <label for="layerName{{i}}"
+                                class="mat-form-field-label ng-tns-c74-10 mat-empty mat-form-field-empty ng-star-inserted"
+                                ng-reflect-disabled="true" id="mat-form-field-label-19" ng-reflect-ng-switch="true"
+                                for="layerContent" aria-owns="layerContent">
+                                <mat-label class="mat-label">שם שכבה: </mat-label>
+                            </label>
+                            <input matInput type="text" placeholder="שנה שם"
+                                [(ngModel)]="emptyRecipe.Layers[i].Description"
+                                (click)="emptyRecipe.Layers[i].Description=null" name="layerName{{i}}"
+                                id="layerName{{i}}" />
+                        </mat-form-field>
+                    </div>
+
+                    <div *ngFor="let component of layer.Components; let j=index;">
+                        <mat-form-field appearance="fill">
+                            <label for="componemt{{i}}{{j}}"
+                                class="mat-form-field-label ng-tns-c74-10 mat-empty mat-form-field-empty ng-star-inserted"
+                                ng-reflect-disabled="true" id="mat-form-field-label-19" ng-reflect-ng-switch="true"
+                                for="layerContent" aria-owns="layerContent">
+                                <mat-label class="mat-label">רכיב:</mat-label>
+                            </label>
+                            <input matInput name="componemt{{i}}{{j}}" id="componemt{{i}}{{j}}" type="text"
+                                placeholder="שנה שם" [(ngModel)]="emptyRecipe.Layers[i].Components[j]"
+                                (click)="this.emptyRecipe.Layers[i].Components[j]=null" />
+                        </mat-form-field>
+                        <button (click)="deleteComponent(i,j)" mat-icon-button class="example-icon favorite-icon"
+                            aria-label="Example icon-button with heart icon">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+
+                    <div>
+                        <mat-form-field appearance="fill">
+                            <mat-label for="layerContent">הכנס רכיב חדש:</mat-label>
+                            <input matInput name="layerContent" id="layerContent" type="text" #componentInRecipe />
+                        </mat-form-field>
+                        <input class="mat-raised-button" type="button" value="הוספת רכיב לשכבה"
+                            (click)="addComponentInRecipe(componentInRecipe, i)">
+                    </div>
+
+                    <input class="mat-raised-button" type="button" (click)="deleteLayer(i)" value="מחיקת שכבה" />
+                </ul>
+            </li>
+        </ul>
+
+        <div>
+            <h1>הוספת שכבה</h1>
+            <mat-form-field appearance="fill">
+                <mat-label for="layerName">שם שכבה:</mat-label>
+                <input matInput name="layerName" id="layerName" type="text" #description />
+            </mat-form-field>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label for="layerContent">הכנס רכיב</mat-label>
+                    <input matInput name="layerContent" id="layerContent" type="text" #component />
+                </mat-form-field>
+                <input type="button" value="+1" (click)="addComponent(component)">
+            </div>
+            <input class="mat-raised-button" type="button" value="להוספת השכבה" (click)="addLayer(description)">
+        </div>
+    </div>
+
+    <div>
+        <h1>הוראות</h1>
+        <ol>
+            <li *ngFor="let instruction of emptyRecipe.Preparation; let i= index"
+                (click)="emptyRecipe.Preparation[i]=null">
+                <mat-form-field appearance="fill" class="inst">
+                    <label for="inst{{i}}"
+                        class="mat-form-field-label ng-tns-c74-10 mat-empty mat-form-field-empty ng-star-inserted"
+                        ng-reflect-disabled="true" id="mat-form-field-label-19" ng-reflect-ng-switch="true"
+                        for="layerContent" aria-owns="layerContent">
+                        <mat-label class="mat-label">הוראה: </mat-label>
+                    </label>
+
+                    <!-- <label class="mat-label" for="inst{{i}}">הוראה: </label> -->
+                    <input matInput name="inst{{i}}" id="inst{{i}}" placeholder="שנה שם"
+                        [(ngModel)]="emptyRecipe.Preparation[i]" />
+                </mat-form-field>
+                <!-- <input class="mat-raised-button" type="button" (click)="deleteInstruction(i)" value="מחיקת הוראה" /> -->
+                <button (click)="deleteInstruction(i)" mat-icon-button class="example-icon favorite-icon"
+                    aria-label="Example icon-button with heart icon">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </li>
+
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>הוראה חדשה: </mat-label>
+                    <input matInput name="preparation" id="preparation" type="text" #instruction />
+                </mat-form-field>
+                <input class="mat-raised-button" type="button" value="הוספת הוראה"
+                    (click)="addInstruction(instruction)">
+            </div>
+
+        </ol>
+    </div>
+
+    <input class="mat-raised-button" type="submit" value="שמור שינויים" (click)="saveChanges()" />
+    <input class="mat-raised-button" type="button" value="בטל" (click)="cancel()" />
+
+</form>

@@ -1,0 +1,31 @@
+mat-toolbar{
+    background-color: black;
+}
+#line{
+    width: 100%;
+    height: 15%;
+    background-color: #B2DFDB;
+}
+nav{
+  text-align: center;
+}
+a:link, a:visited, input {
+    background-color: #f44336;
+    color: white;
+    padding: 4%;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4%;
+  }
+  
+  a:hover, a:active {
+    background-color: #f44336dd;
+  }
+  #name{
+    color: white;
+    font-size:large;
+    display: inline;
+  }
+  

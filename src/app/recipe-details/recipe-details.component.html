@@ -1,0 +1,29 @@
+<h1>{{recipe.Name}}</h1>
+<div>
+    <p>קטגוריה: {{category.Name}} </p>
+    <img src="../../assets/icons/{{category.Icon}}" />
+</div>
+
+<div>
+    <img class="star" *ngFor="let x of stars.slice(recipe.Level-1, stars.length-1);"
+        src="../../assets/icons/star (1).png" />
+    <img class="star" *ngFor="let x of stars.slice(0,recipe.Level);" src="../../assets/icons/star (2).png" />
+</div>
+
+<a routerLink="../../edit-recipe/{{recipe.Id}}" *ngIf="isCurrentUser">לעריכת מתכון"</a>
+
+<img src="../../assets/images/{{recipe.Image}}" id="image" />
+
+<h1>רכיבים:</h1>
+<ul>
+    <li *ngFor="let layer of recipe.Layers">
+        <ul>
+            <h3>{{layer.Description}}</h3>
+            <li *ngFor="let component of layer.Components" id="compList">{{component}}</li>
+        </ul>
+    </li>
+</ul>
+
+<ol>
+    <li *ngFor="let instruction of recipe.Preparation">{{instruction}}</li>
+</ol>

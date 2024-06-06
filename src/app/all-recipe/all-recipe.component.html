@@ -1,0 +1,42 @@
+<div id="heading">
+    <h1>Recipies from the Cooking Spoon</h1>
+    <h2>What would you like to cook today?</h2>    
+    <button id="filter" mat-raised-button color="primary" value="Filter" (click)="playFilter(); ">Filter</button>
+    <br>
+    <a routerLink="/add" *ngIf="isUser()">Add Recipe</a>
+</div>
+<mat-sidenav-container id="sideNav" *ngIf="isFilter" #drawer>
+    <mat-sidenav-content>
+        <button mat-button class="close-icon" color="primary" (click)="displayFilter()">
+            <mat-icon>close</mat-icon>
+        </button>
+        <h1>Filter</h1>
+        <div>
+            <mat-form-field>
+                <mat-label for="name">Recipe Name:</mat-label>
+                <input name="name" id="name" matInput [(ngModel)]="name">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label for="category">Category:</mat-label>
+                <mat-select name="category" id="category" disableRipple [(ngModel)]="categoryId">
+                    <mat-option *ngFor="let category of categories" value={{category.Id}}>{{category.Name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label for="preperationTime">Preperation Time:</mat-label>
+                <input name="preperationTime" id="preperationTime" matInput [(ngModel)]="preperationTime">
+            </mat-form-field>
+        </div>
+        <button mat-raised-button  color="accent" (click)="clearFilter()">Clear Filter</button>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <div>
+    <div *ngFor="let r of allRecipies">
+        <app-small-recipe [emptyRecipe]="r" (click)="showDetails(r)" *ngIf="checkFilter(r)"></app-small-recipe>
+    </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,12 @@
+  <mat-toolbar> 
+    <nav>
+        <a mat-raised-button routerLink="/home" mat-menu-item><mat-icon>home</mat-icon></a>
+        <a mat-raised-button routerLink="/recipies" mat-menu-item>Recipies</a>
+        <a mat-raised-button routerLink="/login" mat-menu-item>Login</a>
+        <a mat-raised-button routerLink="/register" mat-menu-item>Register</a>
+        <input mat-raised-button type="button" value="logout" mat-menu-item *ngIf="checkCurrentUser()" (click)="logout()"/>
+        <div id="name" mat-menu-item>Hello {{userName}}!</div>
+      </nav>
+   </mat-toolbar>
+   <div id="line">
+  </div>
